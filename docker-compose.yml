@@ -14,7 +14,7 @@ services:
     
 
   node-exporter:
-    image: ruanbekker/node-exporter:v0.18.0
+    image: prom/node-exporter-linux-arm64
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -36,13 +36,13 @@ services:
     
 
   blackbox-exporter:
-    image: prom/blackbox-exporter:v0.12.0
+    image: prom/blackbox-exporter-linux-arm64:latest
     networks:
       - private
    
 
   alertmanager:
-    image: prom/alertmanager:v0.17.0
+    image: prom/alertmanager-linux-arm64:latest
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
@@ -65,7 +65,7 @@ services:
       - traefik.webservice.frontend.entryPoints=https
 
   prometheus:
-    image: prom/prometheus:v2.9.2
+    image: prom/prometheus-linux-arm64:latest
     user: root
     volumes:
       - promconfig:/etc/prometheus
@@ -91,7 +91,7 @@ services:
       - traefik.webservice.frontend.entryPoints=https
 
   pushgateway:
-    image: prom/pushgateway:v0.8.0
+    image: prom/pushgateway-linux-arm64:latest
     networks:
       - private
       - proxy
