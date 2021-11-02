@@ -56,11 +56,6 @@ services:
 
   alertmanager:
     image: prom/alertmanager:v0.17.0
-    configs:
-      - source: alertmanager_config
-        target: /etc/alertmanager/config.yml
-      - source: basicauth_htpasswd
-        target: /etc/htpasswd
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
@@ -95,11 +90,6 @@ services:
     volumes:
       - promconfig:/etc/prometheus
       - promdata:/prometheus
-    configs:
-      - source: prometheus_config
-        target: /etc/prometheus/prometheus.yml
-      - source: prometheus_rules
-        target: /etc/prometheus/alert.rules
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -131,9 +121,6 @@ services:
     networks:
       - private
       - proxy
-    configs:
-      - source: basicauth_htpasswd
-        target: /etc/htpasswd
     deploy:
       replicas: 1
       placement:
