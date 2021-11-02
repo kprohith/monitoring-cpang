@@ -53,7 +53,7 @@ services:
       - proxy
     
     labels:
-      - traefik.frontend.rule=Host:alertmanager.${DOMAIN:-localhost}
+      - traefik.frontend.rule=Host(`alertmanager.r18i.me`)
       - traefik.frontend.auth.basic.usersFile=/etc/htpasswd
       - traefik.enable=true
       - traefik.port=9093
@@ -80,7 +80,7 @@ services:
       - proxy
     
     labels:
-      - traefik.frontend.rule=Host:prometheus.${DOMAIN:-localhost}
+      - traefik.frontend.rule=Host(`prometheus.r18i.me`)
       - traefik.enable=true
       - traefik.port=9090
       - traefik.tags=proxy
@@ -97,7 +97,7 @@ services:
       - proxy
     
     labels:
-      - traefik.frontend.rule=Host:pushgateway.${DOMAIN:-localhost}
+      - traefik.frontend.rule=Host(`pushgateway.r18i.me`)
       - traefik.frontend.auth.basic.usersFile=/etc/htpasswd
       - traefik.enable=true
       - traefik.port=9091
@@ -124,7 +124,7 @@ services:
       - proxy
   
     labels:
-      - traefik.frontend.rule=Host:grafana.${DOMAIN:-localhost}
+      - traefik.frontend.rule=Host(`grafana.r18i.me`)
       - traefik.enable=true
       - traefik.port=3000
       - traefik.tags=proxy
