@@ -10,7 +10,7 @@ services:
       - /var/lib/docker:/var/lib/docker:ro
     networks:
       - private
-      - public
+      - proxy
     deploy:
       mode: global
       resources:
@@ -68,7 +68,7 @@ services:
       - alertmanager:/alertmanager
     networks:
       - private
-      - public
+      - proxy
     deploy:
       replicas: 1
       placement:
@@ -82,9 +82,9 @@ services:
         - traefik.frontend.auth.basic.usersFile=/etc/htpasswd
         - traefik.enable=true
         - traefik.port=9093
-        - traefik.tags=public
+        - traefik.tags=proxy
         - traefik.backend=alertmanager
-        - traefik.docker.network=public
+        - traefik.docker.network=proxy
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
@@ -119,9 +119,9 @@ services:
         - traefik.frontend.rule=Host:prometheus.${DOMAIN:-localhost}
         - traefik.enable=true
         - traefik.port=9090
-        - traefik.tags=public
+        - traefik.tags=proxy
         - traefik.backend=prometheus
-        - traefik.docker.network=public
+        - traefik.docker.network=proxy
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
@@ -130,7 +130,7 @@ services:
     image: prom/pushgateway:v0.8.0
     networks:
       - private
-      - public
+      - proxy
     configs:
       - source: basicauth_htpasswd
         target: /etc/htpasswd
@@ -147,9 +147,9 @@ services:
         - traefik.frontend.auth.basic.usersFile=/etc/htpasswd
         - traefik.enable=true
         - traefik.port=9091
-        - traefik.tags=public
+        - traefik.tags=proxy
         - traefik.backend=pushgateway
-        - traefik.docker.network=public
+        - traefik.docker.network=proxy
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
@@ -180,9 +180,9 @@ services:
         - traefik.frontend.rule=Host:grafana.${DOMAIN:-localhost}
         - traefik.enable=true
         - traefik.port=3000
-        - traefik.tags=public
+        - traefik.tags=proxy
         - traefik.backend=grafana
-        - traefik.docker.network=public
+        - traefik.docker.network=proxy
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
@@ -191,8 +191,8 @@ networks:
   private:
     name: private
     driver: overlay
-  public:
-    name: public
+  proxy:
+    name: proxy
     external: true
 
 volumes:
