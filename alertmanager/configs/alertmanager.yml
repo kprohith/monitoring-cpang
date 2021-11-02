@@ -7,4 +7,4 @@ receivers:
 #      - send_resolved: true
 #        username: 'rohithkp'
 #        channel: '#alerts'
-#        api_url: 'https://hooks.slack.com/services/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'
+#        api_url: 'https://hooks.slack.com/services/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'
