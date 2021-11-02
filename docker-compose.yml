@@ -137,7 +137,7 @@ services:
 networks:
   private:
     name: private
-    driver: overlay
+    driver: bridge
   proxy:
     name: proxy
     external: true
